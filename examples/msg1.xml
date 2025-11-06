@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<msg:Request 
+ xmlns:msg="http://example.com/ReqRes/1.0/"
+ xmlns:nc="https://docs.oasis-open.org/niemopen/ns/model/niem-core/6.0/">
+  <msg:RequestID>REQ22</msg:RequestID>
+  <msg:RequestedItem>
+    <msg:ItemConditionCode>NEW</msg:ItemConditionCode>
+    <nc:ItemName>Wrench</nc:ItemName>
+    <nc:ItemQuantity>10</nc:ItemQuantity>
+  </msg:RequestedItem>
+  <msg:RequestedItem>
+    <nc:ItemConditionText>Don't care whatever you  have</nc:ItemConditionText>
+    <nc:ItemName>Bolt</nc:ItemName>
+    <nc:ItemQuantity nc:quantityUnitText="dozen">5</nc:ItemQuantity>
+  </msg:RequestedItem>
+</msg:Request>

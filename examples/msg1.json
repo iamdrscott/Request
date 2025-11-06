@@ -1,0 +1,22 @@
+{
+  "msg:Request": {
+    "msg:RequestID": "REQ22",
+    "msg:RequestedItem": [
+      {
+        "msg:ItemConditionCode": "NEW",
+        "nc:ItemName": "Wrench",
+        "nc:ItemQuantity": {
+          "nc:QuantityLiteral": 10
+        }
+      },
+      {
+        "nc:ItemConditionText": "Don\u0027t care whatever you  have",
+        "nc:ItemName": "Bolt",
+        "nc:ItemQuantity": {
+          "nc:quantityUnitText": "dozen",
+          "nc:QuantityLiteral": 5
+        }
+      }
+    ]
+  }
+}

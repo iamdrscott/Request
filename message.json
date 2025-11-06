@@ -1,0 +1,148 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "@context": {
+    "msg": "http://example.com/ReqRes/1.0/",
+    "nc": "https://docs.oasis-open.org/niemopen/ns/model/niem-core/6.0/",
+    "xs": "http://www.w3.org/2001/XMLSchema"
+  },
+  "properties": {
+    "nc:ItemQuantity": {
+      "description": "A count of the individual units which make up an item.",
+      "$ref": "#/definitions/nc:QuantityType"
+    },
+    "msg:ItemConditionCode": {
+      "description": "A condition of an item.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/msg:ItemConditionCodeType"
+      }
+    },
+    "msg:Request": {
+      "description": "A request for one or more items.",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/msg:RequestType"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/msg:RequestType"
+          }
+        }
+      ]
+    },
+    "msg:RequestedItem": {
+      "description": "A request for a specified quantity of an item.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/nc:ItemType"
+      }
+    },
+    "nc:QuantityLiteral": {
+      "description": "A data type for a count or tally.",
+      "$ref": "#/definitions/nc:NumericType"
+    },
+    "msg:RequestID": {
+      "description": "An identifier for a request.",
+      "type": "string",
+      "pattern": "^\\S*$"
+    },
+    "nc:quantityUnitText": {
+      "description": "A unit of counting or tallying for a quantity.",
+      "type": "string"
+    },
+    "nc:CommentText": {
+      "description": "A comment, note, or remark providing additional information.",
+      "$ref": "#/definitions/nc:TextType"
+    },
+    "nc:ItemConditionText": {
+      "description": "A state or appearance of an item.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/nc:TextType"
+      }
+    },
+    "nc:ItemName": {
+      "description": "A name of an item.",
+      "$ref": "#/definitions/nc:TextType"
+    }
+  },
+  "definitions": {
+    "msg:ItemConditionCodeType": {
+      "pattern": "^\\S*$",
+      "description": "A data type for the condition of an item.",
+      "type": "string",
+      "oneOf": [
+        {
+          "const": "NEW"
+        },
+        {
+          "const": "USED"
+        }
+      ]
+    },
+    "msg:RequestType": {
+      "description": "A data type for a request of one or more items.",
+      "type": "object",
+      "properties": {
+        "msg:RequestID": {
+          "$ref": "#/properties/msg:RequestID"
+        },
+        "msg:RequestedItem": {
+          "$ref": "#/properties/msg:RequestedItem"
+        }
+      },
+      "required": [
+        "msg:RequestID",
+        "msg:RequestedItem"
+      ]
+    },
+    "nc:ItemType": {
+      "description": "A data type for an article or thing.",
+      "type": "object",
+      "properties": {
+        "msg:ItemConditionCode": {
+          "$ref": "#/properties/msg:ItemConditionCode"
+        },
+        "nc:ItemConditionText": {
+          "$ref": "#/properties/nc:ItemConditionText"
+        },
+        "nc:ItemName": {
+          "$ref": "#/properties/nc:ItemName"
+        },
+        "nc:ItemQuantity": {
+          "$ref": "#/properties/nc:ItemQuantity"
+        }
+      },
+      "required": [
+        "nc:ItemConditionAbstract",
+        "nc:ItemName",
+        "nc:ItemQuantity"
+      ]
+    },
+    "nc:NumericType": {
+      "description": "A data type for a number value.",
+      "type": "number"
+    },
+    "nc:QuantityType": {
+      "description": "A data type for a count or tally.",
+      "type": "object",
+      "properties": {
+        "nc:QuantityLiteral": {
+          "$ref": "#/properties/nc:QuantityLiteral"
+        },
+        "nc:quantityUnitText": {
+          "$ref": "#/properties/nc:quantityUnitText"
+        }
+      },
+      "required": [
+        "nc:QuantityLiteral"
+      ]
+    },
+    "nc:TextType": {
+      "description": "A data type for a character string.",
+      "type": "string"
+    }
+  }
+}

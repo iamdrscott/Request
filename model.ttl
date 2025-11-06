@@ -1,0 +1,95 @@
+@prefix msg:            <http://example.com/ReqRes/1.0/> .
+@prefix nc:             <https://docs.oasis-open.org/niemopen/ns/model/niem-core/6.0/> .
+@prefix xs:             <http://www.w3.org/2001/XMLSchema> .
+
+@prefix owl:            <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:           <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf:            <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd:            <http://www.w3.org/2001/XMLSchema> .
+
+nc:ItemQuantity
+    a owl:ObjectProperty ;
+    rdfs:range nc:QuantityType ;
+    rdfs:comment "A count of the individual units which make up an item." .
+
+msg:ItemConditionCode
+    a owl:DataProperty ;
+    rdfs:range msg:ItemConditionCodeType ;
+    rdfs:comment "A condition of an item." .
+
+msg:Request
+    a owl:ObjectProperty ;
+    rdfs:range msg:RequestType ;
+    rdfs:comment "A request for one or more items." .
+
+msg:RequestedItem
+    a owl:ObjectProperty ;
+    rdfs:range nc:ItemType ;
+    rdfs:comment "A request for a specified quantity of an item." .
+
+nc:QuantityLiteral
+    a owl:DataProperty ;
+    rdfs:range nc:NumericType ;
+    rdfs:comment "A data type for a count or tally." .
+
+msg:RequestID
+    a owl:DataProperty ;
+    rdfs:range xsd:token ;
+    rdfs:comment "An identifier for a request." .
+
+nc:quantityUnitText
+    a owl:DataProperty ;
+    rdfs:range xsd:string ;
+    rdfs:comment "A unit of counting or tallying for a quantity." .
+
+nc:CommentText
+    a owl:DataProperty ;
+    rdfs:range nc:TextType ;
+    rdfs:comment "A comment, note, or remark providing additional information." .
+
+nc:ItemConditionText
+    a owl:DataProperty ;
+    rdfs:range nc:TextType ;
+    rdfs:comment "A state or appearance of an item." .
+
+nc:ItemName
+    a owl:DataProperty ;
+    rdfs:range nc:TextType ;
+    rdfs:comment "A name of an item." .
+
+nc:ItemType
+    a owl:Class ;
+    rdfs:comment "A data type for an article or thing." ;
+    owl:subclassOf [
+        a owl:Restriction ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onProperty nc:ItemName
+    ] ;
+    owl:subclassOf [
+        a owl:Restriction ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onProperty nc:ItemQuantity
+    ] .
+
+nc:QuantityType
+    a owl:Class ;
+    rdfs:comment "A data type for a count or tally." ;
+    owl:subclassOf [
+        a owl:Restriction ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onProperty nc:QuantityLiteral
+    ] .
+
+msg:RequestType
+    a owl:Class ;
+    rdfs:comment "A data type for a request of one or more items." ;
+    owl:subclassOf [
+        a owl:Restriction ;
+        owl:cardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onProperty msg:RequestID
+    ] ;
+    owl:subclassOf [
+        a owl:Restriction ;
+        owl:minCardinality "1"^^xsd:nonNegativeInteger ;
+        owl:onProperty msg:RequestedItem
+    ] .
