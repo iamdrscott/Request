@@ -1,56 +1,23 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
-  "@context": {
-    "msg": "http://example.com/ReqRes/1.0/",
-    "nc": "https://docs.oasis-open.org/niemopen/ns/model/niem-core/6.0/",
-    "xs": "http://www.w3.org/2001/XMLSchema"
-  },
+  "required": [ "@context" ],
   "properties": {
-    "nc:ItemQuantity": {
-      "description": "A count of the individual units which make up an item.",
-      "$ref": "#/definitions/nc:QuantityType"
-    },
     "msg:ItemConditionCode": {
       "description": "A condition of an item.",
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/msg:ItemConditionCodeType"
-      }
+      "$ref": "#/definitions/msg:ItemConditionCodeType"
     },
     "msg:Request": {
       "description": "A request for one or more items.",
-      "anyOf": [
-        {
-          "$ref": "#/definitions/msg:RequestType"
-        },
-        {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/msg:RequestType"
-          }
-        }
-      ]
+      "$ref": "#/definitions/msg:RequestType"
     },
     "msg:RequestedItem": {
       "description": "A request for a specified quantity of an item.",
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/nc:ItemType"
-      }
-    },
-    "nc:QuantityLiteral": {
-      "description": "A data type for a count or tally.",
-      "$ref": "#/definitions/nc:NumericType"
+      "$ref": "#/definitions/nc:ItemType"
     },
     "msg:RequestID": {
       "description": "An identifier for a request.",
-      "type": "string",
-      "pattern": "^\\S*$"
-    },
-    "nc:quantityUnitText": {
-      "description": "A unit of counting or tallying for a quantity.",
-      "type": "string"
+      "$ref": "#/definitions/xs:token"
     },
     "nc:CommentText": {
       "description": "A comment, note, or remark providing additional information.",
@@ -58,91 +25,111 @@
     },
     "nc:ItemConditionText": {
       "description": "A state or appearance of an item.",
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/nc:TextType"
-      }
+      "$ref": "#/definitions/nc:TextType"
     },
     "nc:ItemName": {
       "description": "A name of an item.",
       "$ref": "#/definitions/nc:TextType"
+    },
+    "nc:ItemQuantity": {
+      "description": "A count of the individual units which make up an item.",
+      "$ref": "#/definitions/nc:QuantityType"
+    },
+    "nc:QuantityLiteral": {
+      "description": "A data type for a count or tally.",
+      "$ref": "#/definitions/nc:NumericType"
+    },
+    "nc:quantityUnitText": {
+      "description": "A unit of counting or tallying for a quantity.",
+      "$ref": "#/definitions/xs:string"
+    },
+    "@context": {
+      "anyOf": [
+        { "type": "object" }
+      ]
     }
   },
   "definitions": {
-    "msg:ItemConditionCodeType": {
-      "pattern": "^\\S*$",
-      "description": "A data type for the condition of an item.",
-      "type": "string",
-      "oneOf": [
-        {
-          "const": "NEW"
-        },
-        {
-          "const": "USED"
-        }
-      ]
-    },
     "msg:RequestType": {
       "description": "A data type for a request of one or more items.",
       "type": "object",
       "properties": {
         "msg:RequestID": {
-          "$ref": "#/properties/msg:RequestID"
+          "description": "An identifier for a request.",
+          "$ref": "#/definitions/xs:token"
         },
         "msg:RequestedItem": {
-          "$ref": "#/properties/msg:RequestedItem"
+          "description": "A request for a specified quantity of an item.",
+          "type": "array",
+          "items": { "$ref": "#/definitions/nc:ItemType" },
+          "minItems": 1
         }
       },
-      "required": [
-        "msg:RequestID",
-        "msg:RequestedItem"
-      ]
+      "required": [ "msg:RequestID", "msg:RequestedItem" ],
+      "additionalProperties": false
     },
     "nc:ItemType": {
       "description": "A data type for an article or thing.",
       "type": "object",
       "properties": {
         "msg:ItemConditionCode": {
-          "$ref": "#/properties/msg:ItemConditionCode"
+          "description": "A condition of an item.",
+          "type": "array",
+          "items": { "$ref": "#/definitions/msg:ItemConditionCodeType" }
         },
         "nc:ItemConditionText": {
-          "$ref": "#/properties/nc:ItemConditionText"
+          "description": "A state or appearance of an item.",
+          "type": "array",
+          "items": { "$ref": "#/definitions/nc:TextType" }
         },
         "nc:ItemName": {
-          "$ref": "#/properties/nc:ItemName"
+          "description": "A name of an item.",
+          "$ref": "#/definitions/nc:TextType"
         },
         "nc:ItemQuantity": {
-          "$ref": "#/properties/nc:ItemQuantity"
+          "description": "A count of the individual units which make up an item.",
+          "$ref": "#/definitions/nc:QuantityType"
         }
       },
-      "required": [
-        "nc:ItemConditionAbstract",
-        "nc:ItemName",
-        "nc:ItemQuantity"
-      ]
-    },
-    "nc:NumericType": {
-      "description": "A data type for a number value.",
-      "type": "number"
+      "required": [ "nc:ItemName", "nc:ItemQuantity" ],
+      "additionalProperties": false
     },
     "nc:QuantityType": {
       "description": "A data type for a count or tally.",
       "type": "object",
       "properties": {
         "nc:QuantityLiteral": {
-          "$ref": "#/properties/nc:QuantityLiteral"
+          "description": "A data type for a count or tally.",
+          "$ref": "#/definitions/nc:NumericType"
         },
         "nc:quantityUnitText": {
-          "$ref": "#/properties/nc:quantityUnitText"
+          "description": "A unit of counting or tallying for a quantity.",
+          "$ref": "#/definitions/xs:string"
         }
       },
-      "required": [
-        "nc:QuantityLiteral"
+      "required": [ "nc:QuantityLiteral" ],
+      "additionalProperties": false
+    },
+    "msg:ItemConditionCodeType": {
+      "description": "A data type for the condition of an item.",
+      "allOf": [
+        { "$ref": "#/definitions/xs:token" },
+        { "enum": [ "NEW", "USED" ] }
       ]
+    },
+    "nc:NumericType": {
+      "description": "A data type for a number value.",
+      "$ref": "#/definitions/xs:decimal"
     },
     "nc:TextType": {
       "description": "A data type for a character string.",
-      "type": "string"
+      "$ref": "#/definitions/xs:string"
+    },
+    "xs:decimal": { "type": "number" },
+    "xs:string": { "type": "string" },
+    "xs:token": {
+      "type": "string",
+      "pattern": "^(?! )[\\S ]*(?<! )$"
     }
   }
 }

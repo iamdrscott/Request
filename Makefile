@@ -11,7 +11,7 @@ all: cmf json model.ttl message.json message.xsd
 cmf: model.cmf
 
 model.cmf : $(XSD_FILES)
-	$(CT) x2m -o model.cmf model.xsd/CrashDriver.xsd
+	$(CT) x2m -o model.cmf model.xsd/request.xsd
 
 model.ttl : model.cmf
 	$(CT) m2r model.cmf > model.ttl
